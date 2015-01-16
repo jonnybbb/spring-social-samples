@@ -6,6 +6,10 @@ apply plugin: 'tomcat'
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url 'http://dl.bintray.com/jonnybbb/repo'
+        }
+        jcenter()
     }
 
     dependencies {
@@ -39,6 +43,7 @@ dependencies {
 	compile "org.springframework.social:spring-social-facebook-web:$springSocialFacebookVersion"
 	compile "org.springframework.social:spring-social-twitter:$springSocialTwitterVersion"
 	compile "org.springframework.social:spring-social-linkedin:$springSocialLinkedInVersion"
+	compile "org.springframework.social:spring-social-xing:1.1.2.RELEASE"
     compile("org.thymeleaf:thymeleaf-spring4:$thymeleafVersion")
     compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafLayoutVersion")
 
@@ -64,6 +69,7 @@ repositories {
 	maven { url 'http://repo.spring.io/snapshot' }
 	maven { url 'http://download.java.net/maven/2' }
 	mavenCentral()
+    jcenter()
 }
 
 task wrapper(type: Wrapper) {

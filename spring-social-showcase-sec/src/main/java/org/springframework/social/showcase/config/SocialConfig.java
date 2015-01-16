@@ -15,9 +15,6 @@
  */
 package org.springframework.social.showcase.config;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -46,6 +43,11 @@ import org.springframework.social.showcase.facebook.PostToWallAfterConnectInterc
 import org.springframework.social.showcase.twitter.TweetAfterConnectInterceptor;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
+import org.springframework.social.xing.api.Xing;
+import org.springframework.social.xing.connect.XingConnectionFactory;
+
+import javax.inject.Inject;
+import javax.sql.DataSource;
 
 /**
  * Spring Social Configuration.
@@ -65,6 +67,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		cfConfig.addConnectionFactory(new TwitterConnectionFactory(env.getProperty("twitter.appKey"), env.getProperty("twitter.appSecret")));
 		cfConfig.addConnectionFactory(new FacebookConnectionFactory(env.getProperty("facebook.appKey"), env.getProperty("facebook.appSecret")));
 		cfConfig.addConnectionFactory(new LinkedInConnectionFactory(env.getProperty("linkedin.appKey"), env.getProperty("linkedin.appSecret")));
+		cfConfig.addConnectionFactory(new XingConnectionFactory(env.getProperty("xing.appKey"), env.getProperty("xing.appSecret")));
 	}
 	
 	@Override
@@ -124,5 +127,12 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		Connection<LinkedIn> connection = repository.findPrimaryConnection(LinkedIn.class);
 		return connection != null ? connection.getApi() : null;
 	}
+
+    @Bean
+    @Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
+    public Xing xing(ConnectionRepository repository) {
+        Connection<Xing> connection = repository.findPrimaryConnection(Xing.class);
+        return connection != null ? connection.getApi() : null;
+    }
 
 }
